@@ -5,7 +5,7 @@
   "rewrites": [
     {
       "source": "/api/(.*)",
-      "destination": "https://faculte-connect-backend.vercel.app/api/$1"
+      "destination": "https://fsteam.vercel.app/api/$1"
     },
     {
       "source": "/(.*)",
