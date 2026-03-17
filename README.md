@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# Faculte Connect Frontend
 
 TODO: Document your project here
