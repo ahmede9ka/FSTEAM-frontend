@@ -11,11 +11,12 @@ export default defineConfig(({ mode }) => ({
       overlay: false,
     },
     proxy: {
-      '/api': {
-        target: 'http://localhost:5000',
+      "/api": {
+        // Point dev API calls to the Spring API gateway
+        target: "http://localhost:8080",
         changeOrigin: true,
-      }
-    }
+      },
+    },
   },
   plugins: [react()],
   resolve: {
