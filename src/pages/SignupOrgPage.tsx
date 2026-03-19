@@ -11,8 +11,13 @@ interface SponsorInput { nom: string; logo: string; lien: string; }
 
 export default function SignupOrgPage() {
   const [sponsors, setSponsors] = useState<SponsorInput[]>([]);
-  const { login } = useAuth();
+  const { signUpOrganization } = useAuth();
   const navigate = useNavigate();
+
+  // Minimal fields required for Spring auth-service registration
+  const [clubName, setClubName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const addSponsor = () => setSponsors([...sponsors, { nom: '', logo: '', lien: '' }]);
   const removeSponsor = (i: number) => setSponsors(sponsors.filter((_, idx) => idx !== i));
@@ -22,9 +27,13 @@ export default function SignupOrgPage() {
     setSponsors(updated);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    login('organization', 'Club IEEE FST');
+    await signUpOrganization({
+      email,
+      password,
+      name: clubName,
+    });
     navigate('/dashboard');
   };
 
@@ -45,7 +54,7 @@ export default function SignupOrgPage() {
         <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label>Nom du club / association / département</Label>
-            <Input placeholder="Club IEEE FST" />
+            <Input placeholder="Club IEEE FST" value={clubName} onChange={(e) => setClubName(e.target.value)} />
           </div>
           <div className="space-y-2">
             <Label>Type</Label>
@@ -60,11 +69,21 @@ export default function SignupOrgPage() {
           </div>
           <div className="space-y-2">
             <Label>Email officiel (optionnel)</Label>
-            <Input type="email" placeholder="club@fst.utm.tn" />
+            <Input
+              type="email"
+              placeholder="club@fst.utm.tn"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
           </div>
           <div className="space-y-2">
             <Label>Mot de passe</Label>
-            <Input type="password" placeholder="••••••••" />
+            <Input
+              type="password"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
           </div>
 
           <div className="p-4 rounded-xl bg-muted/50 space-y-3">
